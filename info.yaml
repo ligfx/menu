@@ -1,0 +1,52 @@
+Scripps:
+  uri: http://www.scrippscollege.edu/students/dining-services/index.php
+  hours:
+    breakfast: 7:30am - 9:30am<br/>9:30am - 10:00am (continental)
+    brunch: 10:45am - 1:00pm
+    lunch: 11:15am - 1:30pm
+    dinner: 4:45pm - 7:00pm
+    dinner_weekend: 5:00pm - 6:30pm
+    snack: 9:30pm - 11:30pm
+Frank:
+  uri: http://www.pomona.edu/administration/dining/menus/frank.aspx
+  hours:
+    breakfast: 7:30am - 10:00am
+    brunch: 11:00am - 1:00pm
+    lunch: 11:30am - 1:00pm
+    dinner: 5:00pm - 7:00pm
+    dinner_weekend: 5:30pm - 7:00pm
+Frary:
+  uri: http://www.pomona.edu/administration/dining/menus/frary.aspx
+  hours:
+    breakfast: 7:30am - 10:00am
+    brunch: 9:00am - 11:00am (continental)<br/>11:00am - 1:00pm
+    lunch: 11:30am - 1:00pm
+    dinner: 5:00pm - 8:00pm
+    dinner_weekend: 5:30pm - 7:00pm
+Oldenborg:
+  uri: http://www.pomona.edu/administration/dining/menus/oldenborg.aspx
+  hours:
+    lunch: 11:45am - 12:45pm
+Mudd:
+  uri_pattern: http://www.hmcdining.com/dining/menus/week_%i.html
+  hours:
+    breakfast: 7:30am - 9:30am
+    brunch: 10:30am - 12:45pm
+    lunch: 11:15am - 1:00pm
+    dinner: 5:00pm - 7:00pm
+Collins:
+  uri: http://www.cafebonappetit.com/menu/your-cafe/collins-cmc/cafes/details/50/collins-bistro
+  hours:
+    breakfast: 7:30am - 9:00am<br/>9:00am - 9:30am (continental)
+    brunch: 10:30am - 12:30pm
+    lunch: 11:00am - 1:00pm
+    dinner: 5:00pm - 7:00pm
+    dinner_weekend: 4:45pm - 6:15pm
+Pitzer:
+  uri: http://www.cafebonappetit.com/menu/your-cafe/pitzer/cafes/details/219/mcconnell-bistro
+  hours:
+    breakfast: 7:30am - 9:30am<br/>9:00am - 10:00am (continental)
+    brunch: 10:30am - 12:30pm
+    lunch: 11:15am - 1:30pm
+    dinner: 5:00pm - 7:00pm
+    dinner_weekend: 5:00pm - 6:30pm

@@ -1,0 +1,2 @@
+#min	hour	mday	month	wday	command
+17	*	*	*	*	( cd /Users/michaelmaltese/Dropbox/5cmenu-dev.git/; make ) 2>&1 >/dev/null
