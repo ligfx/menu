@@ -55,7 +55,7 @@ uris.each do |parser, uri|
 	html = @cache.get uri, parser.name.chomp("Parser")
 	begin
 		@data.add parser.parse(html) unless html.empty?
-	rescue => e
+	rescue Exception => e
 		$stderr.puts "#{parser} failed!"
 		$stderr.puts e
 		$stderr.puts e.backtrace
