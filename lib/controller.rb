@@ -23,7 +23,7 @@ uris = {
 	ScrippsParser => @info["Scripps"]["uri"]
 }
 
-cachedir = "cache"
+cachedir = @info["cachedir"]
 if ENV["LAZY"]
 	@cache = LazyHTMLCache.new cachedir
 else

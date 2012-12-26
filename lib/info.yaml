@@ -1,3 +1,4 @@
+cachedir: ../cache
 Scripps:
   uri: http://www.scrippscollege.edu/students/dining-services/index.php
   hours:
