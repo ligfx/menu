@@ -48,7 +48,7 @@ begin
 	end
 end
 
-@data = JSONDataCache.new "cache/data.json"
+@data = JSONDataCache.new File.join(cachedir, "data.json")
 @data.load
 
 uris.each do |parser, uri|
