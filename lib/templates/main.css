@@ -2,8 +2,7 @@ html, body { margin: 0; padding: 0; }
 
 body {
 	color: #333;
-	font-family: Georgia, sans-serif;
-	background: url(/images/stripe.png) repeat-x;
+	font-family: arial, sans-serif;
 }
 
 #logo {
@@ -85,34 +84,16 @@ iframe {
 .menu h1 {
 	font-size: 1.4em;
 	margin: 0;
-	font-family: Garamond;
-}
-
-#main .menu h1 a {
-	font-weight: 400;
-}
-
-.hours {
-	font-size: 12px;
-	font-variant: small-caps;
-}
-
-ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-.menu > ul {
-	margin-top: 5px;
-	margin-right: 5px;
-	font-size: 12px;
-	line-height: 17px;
-	font-family: verdana, arial, helvetica;
-}
-
-.menu li > ul > li {
-	margin-left: 10px; text-indent: -10px;
+	font-family: Helvetica;
 }
 
 #logo { z-index: 5; }
+
+.menu p {
+	padding: 0;
+	margin: 0;
+}
+
+.menu .group {
+	padding-bottom: 1em;
+}

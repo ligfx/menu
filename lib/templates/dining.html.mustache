@@ -1,0 +1,77 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://opengraphprotocol.org/schema/"
+      xmlns:fb="http://www.facebook.com/2008/fbml">
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+	<meta property="og:title" content="The Five-College Menu"/> 
+    <meta property="og:type" content="website"/> 
+    <meta property="og:image" content="http://www.mikemaltese.com/5cmenu/dino.jpg"/> 
+    <meta property="og:url" content="http://www.mikemaltese.com/5cmenu/"/> 
+    <meta property="og:site_name" content="mikemaltese.com"/> 
+    <meta property="fb:admins" content="709617141"/>
+    <meta property="og:description"
+          content="Tired of looking at five different websites just to figure out who has the best lunch? The Five-College Menu has all the information you need, in one convenient location. "/> 
+    <title>The Five-College Menu (5C Menu)</title>
+
+<style type="text/css">
+	{{ css }}
+</style>
+
+</head>
+
+<body>
+
+<div id="header">
+	<h1>The Five-College Menu</h1>
+</div>
+<div id="subheader">
+	<p>An <a href="http://aspc.pomona.edu">Associated Students of Pomona College</a> web project.</p>
+	<fb:like href="http://www.mikemaltese.com/5cmenu/" show_faces="true" width="500"></fb:like>
+</div>
+<div id="main">	
+	<h1 style="text-align: center">{{ today }}:</h1>
+
+	{{#dining_halls}}
+		<div class="menu">
+			<h1><a href="{{ url }}">{{ name }}</a><img src="http://upload.wikimedia.org/wikipedia/commons/6/64/Icon_External_Link.png"></h1>
+
+			{{#meals}}
+				<div>
+					<h1>{{ name }}</h1>
+					{{#groups}}
+						<div class="group">
+							<strong>{{ name }}</strong>
+							<p>{{ desc }}</p>
+						</div>
+					{{/groups}}
+				</div>
+			{{/meals}}
+
+		</div>
+		<div class="clear"></div>
+	{{/dining_halls}}
+</div>
+
+<!--<div id="logo">
+	<img src="dino.png" alt="dinosaur logo" height="210"/>
+</div>-->
+
+<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-20212552-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<script type="text/javascript" src="http://updateyourbrowser.net/uyb.js"> </script>
+
+</body>
+
+</html>
