@@ -77,8 +77,8 @@ iframe {
 }
 
 .menu {
-	float: left;
-	width: 16.66666%;
+	margin: 0 auto;
+	width: 800px;
 }
 
 .menu h1 {
@@ -94,6 +94,17 @@ iframe {
 	margin: 0;
 }
 
-.menu .group {
+.clear {
+	clear: both;
+}
+
+.menu .meal {
+	width: 195px;
+	float: left;
 	padding-bottom: 1em;
+	padding-right: 5px;
+}
+
+.menu .group {
+	/* padding-bottom: 1em; */
 }

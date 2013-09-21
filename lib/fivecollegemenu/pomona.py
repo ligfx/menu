@@ -7,7 +7,7 @@ from datetime import date
 from datetime import timedelta
 from itertools import groupby
 import json
-from lxml.html import fromstring as html
+import lxml.html
 import os
 import re
 import requests
@@ -32,12 +32,8 @@ def download_helper_maybe_cache(url):
 			f.write(data)
 		return data
 
-def get_frary():
-	frary_url = "http://www.pomona.edu/administration/dining/menus/frary.aspx"
-	return (frary_url, I)
-
 def find_spreadsheet_id(data):
-	doc = html(data)
+	doc = lxml.html.fromstring(data)
 	spreadsheet_id = doc.xpath('//*[@data-google-spreadsheet-id]')
 	assert len(spreadsheet_id) == 1
 	return spreadsheet_id[0].get('data-google-spreadsheet-id')
@@ -98,7 +94,7 @@ class GoogleCell:
 		self.row = int(position[1:])
 		value = c['content']['$t']
 		value = re.sub(u'[\xa0\s]+', ' ', value)
-		self.value = value.strip()
+		self.value = value.strip().encode('utf-8')
 	def __repr__(self):
 		return "(%s, %i, %s)" % (self.column, self.row, self.value)
 
@@ -109,14 +105,13 @@ def parse_cells_with_start_date(cells, start_date):
 	#   day of week in first row, first column
 	#   station names in second column
 	#   meals in other columns
-	
+
 	current_date = start_date
 	header = cells.pop(0).value
-	assert "Frary" in header or "Frank" in header
 
 	while len(cells) > 0:
 		row = cells[0].row
-		assert cells.pop(0).value.find("Day") != -1
+		assert "Day" in cells.pop(0).value
 		if cells[0].value == "Station":
 			cells.pop(0)
 		meal_names = {}
@@ -141,6 +136,39 @@ def parse_cells_with_start_date(cells, start_date):
 		yield (current_date, [(k, v) for k, v in meals.items()])
 		current_date = current_date + timedelta(days=1)
 
+def cell_rows(cells):
+	for k, g in groupby(cells, lambda c: c.row):
+		yield list(g)
+
+
+def parse_oldenborg_cells_with_start_date(cells, start_date):
+	# First row is header "'Oldenborg'"
+	# Second row is "'Dish' *dates"
+	# All other rows: first cell (A) is group name, next cells are
+	# values for each day.
+
+	current_date = start_date
+	header = cells.pop(0).value
+	assert "Oldenborg" in header
+
+	rows = cell_rows(cells)
+	assert "Dish" in next(rows)[0].value
+
+	dates = []
+
+	for i in range(5):
+		dates.append((
+			current_date + timedelta(days=i),
+			((u'Lunch', []),)
+		))
+
+	for r in rows:
+		group_name, descs = r[0], r[1:]
+		for i, d in enumerate(descs):
+			dates[i][1][0][1].append((group_name.value, d.value))
+	
+	return dates
+
 def print_menu(menu):
 	for (date, meals) in menu:
 		print(date)
@@ -150,14 +178,27 @@ def print_menu(menu):
 				print("    " + "= %s" % groupname)
 				print("    " + desc)
 
-##
-
-def frary(search_date):
-	frary = download(get_frary())
-	spreadsheet_key = find_spreadsheet_id(frary)
+def get_menu(search_date, url):
+	html = download((url, I))
+	spreadsheet_key = find_spreadsheet_id(html)
 	worksheets = download(get_worksheets_for_key(spreadsheet_key))
 	worksheet = find(lambda _: _.date() == most_recent_monday(search_date), worksheets)
 	start_date = most_recent_monday(search_date)
 	cells = download(get_cells_feed(worksheet))
 	dates = parse_cells_with_start_date(cells, start_date)
+	return filter(lambda (day, _): day == search_date, dates)[0][1]
+
+def get_pomona(slug, search_date):
+	return get_menu(search_date, "http://www.pomona.edu/administration/dining/menus/%s.aspx" % slug)
+
+def frary(*args): return get_pomona("frary", *args)
+def frank(*args): return get_pomona("frank", *args)
+def oldenborg(search_date):
+	html = download(("http://www.pomona.edu/administration/dining/menus/oldenborg.aspx", I))
+	spreadsheet_key = find_spreadsheet_id(html)
+	worksheets = download(get_worksheets_for_key(spreadsheet_key))
+	worksheet = find(lambda _: _.date() == most_recent_monday(search_date), worksheets)
+	start_date = most_recent_monday(search_date)
+	cells = download(get_cells_feed(worksheet))
+	dates = parse_oldenborg_cells_with_start_date(cells, start_date)
 	return filter(lambda (day, _): day == search_date, dates)[0][1]

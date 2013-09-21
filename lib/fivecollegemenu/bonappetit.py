@@ -10,8 +10,8 @@ import requests
 def each_slice(seq, n):
 	return zip(*[iter(seq)]*n)
 
-def parse_rss():
-	resp = requests.get("http://legacy.cafebonappetit.com/rss/menu/50")
+def parse_rss(id):
+	resp = requests.get("http://legacy.cafebonappetit.com/rss/menu/%s" % id)
 	rss = etree.fromstring(resp.text.encode('utf-8'))
 
 	for item in rss.xpath("*/item"):
@@ -32,6 +32,11 @@ def parse_rss():
 		
 		yield (date, meals)
 
-def cmc(search_date):
-	menu = parse_rss()
+def find_date(search_date, menu):
 	return filter(lambda (day, meals): day == search_date, menu)[0][1]
+
+def collins(search_date):
+	return find_date(search_date, parse_rss("50"))
+
+def mcconnell(search_date):
+	return find_date(search_date, parse_rss("219"))
