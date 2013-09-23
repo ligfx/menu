@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
 
+from collections import OrderedDict
 import lxml.etree
 import lxml.html
 import re
@@ -24,39 +25,19 @@ def malott(search_date):
 	dates = filter(lambda _:
 		re.search(date_regex(search_date), _.text_content()), h3s)
 
+	meals = []
+
 	for d in dates:
-		mealname =  d.getnext().xpath(".//a")[0].text_content().strip()
+		mealinfo = d.getnext()
+		mealname = mealinfo.xpath(".//a")[0].text_content().strip()
+		mealinfo = mealinfo.getnext()
 
-import datetime
-
-malott(datetime.date.today())
+		items = [li.text_content().strip() for li in mealinfo.xpath(".//li")]
+		meals.append((mealname, [("", "<br>".join(items))]))
+	return meals
 
 '''
 
-class ScrippsParser < Parser
-	def self.date_regex
-		long_month = RIGHT_NOW.strftime("%b")
-		short_month = RIGHT_NOW.strftime("%B")
-		
-		/(#{long_month})|(#{short_month})\s*#{RIGHT_NOW.mday}/
-	end
-	def self.parse(html)
-		doc = Hpricot(html)
-		
-		content = doc/"#content"
-		
-		dates = (content/:h3).find_all do |h3|
-			h3.to_plain_text =~ self.date_regex
-		end
-		
-		if dates.empty?
-			return {
-				"Scripps" => Problem("No current menu available.")
-			}
-		end
-		
-		menu = {}
-		
 		dates.each do |h3|
 			mealinfo = h3.next_sibling
 			raise NotParagraphElement if not mealinfo.name =~ /p/i
